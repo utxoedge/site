@@ -6,7 +6,15 @@ declare global {
 		// interface Locals {}
 		// interface PageData {}
 		// interface PageState {}
-		// interface Platform {}
+		interface Platform {
+			env: {
+				TOKENS: KVNamespace;
+				ACCOUNTS: D1Database;
+			};
+			context: {
+				waitUntil(promise: Promise<unknown>): void;
+			};
+		}
 	}
 }
 
