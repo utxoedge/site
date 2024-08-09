@@ -1,49 +1,58 @@
 {
-	"name": "site",
-	"version": "0.0.1",
-	"private": true,
-	"engines": {
-		"node": ">=21.1.0"
-	},
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"test": "npm run test:integration && npm run test:unit",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write .",
-		"test:integration": "playwright test",
-		"test:unit": "vitest",
-		"schema": "drizzle-kit generate",
-		"migrate": "drizzle-kit migrate",
-		"studio": "drizzle-kit studio"
-	},
-	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20240806.0",
-		"@playwright/test": "^1.28.1",
-		"@sveltejs/adapter-cloudflare": "^4.7.0",
-		"@sveltejs/kit": "^2.0.0",
-		"@sveltejs/vite-plugin-svelte": "^3.0.0",
-		"@types/eslint": "^9.6.0",
-		"drizzle-kit": "^0.24.0",
-		"eslint": "^9.0.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.36.0",
-		"globals": "^15.0.0",
-		"prettier": "^3.1.1",
-		"prettier-plugin-svelte": "^3.1.2",
-		"svelte": "^5.0.0-next.1",
-		"svelte-check": "^3.6.0",
-		"typescript": "^5.0.0",
-		"typescript-eslint": "^8.0.0",
-		"vite": "^5.0.3",
-		"vitest": "^2.0.0",
-		"wrangler": "^3.69.1"
-	},
-	"type": "module",
-	"dependencies": {
-		"drizzle-orm": "^0.33.0"
-	}
+  "name": "site",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": ">=21.1.0"
+  },
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "npm run test:integration && npm run test:unit",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write .",
+    "test:integration": "playwright test",
+    "test:unit": "vitest",
+    "schema": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate",
+    "studio": "drizzle-kit studio"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240806.0",
+    "@playwright/test": "^1.28.1",
+    "@sveltejs/adapter-cloudflare": "^4.7.0",
+    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/vite-plugin-svelte": "^3.0.0",
+    "@tailwindcss/typography": "^0.5.13",
+    "@types/eslint": "^9.6.0",
+    "autoprefixer": "^10.4.19",
+    "drizzle-kit": "^0.24.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-svelte": "^2.36.0",
+    "globals": "^15.0.0",
+    "postcss": "^8.4.38",
+    "prettier": "^3.1.1",
+    "prettier-plugin-svelte": "^3.1.2",
+    "prettier-plugin-tailwindcss": "^0.6.4",
+    "svelte": "^5.0.0-next.1",
+    "svelte-check": "^3.6.0",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.0.0",
+    "vite": "^5.0.3",
+    "vitest": "^2.0.0",
+    "wrangler": "^3.69.1"
+  },
+  "type": "module",
+  "dependencies": {
+    "bits-ui": "^0.21.13",
+    "clsx": "^2.1.1",
+    "drizzle-orm": "^0.33.0",
+    "tailwind-merge": "^2.4.0",
+    "tailwind-variants": "^0.2.1"
+  }
 }

@@ -8,20 +8,20 @@ import * as schema from '$lib/server/schema.sql';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ platform }) => {
-	const db = drizzle(platform!.env.ACCOUNTS);
+  const db = drizzle(platform!.env.ACCOUNTS);
 
-	const workspaces = await db
-		.select({
-			id: schema.workspaces.id,
-			slug: schema.workspaces.slug,
-			name: schema.workspaces.name,
-			createdAt: schema.workspaces.createdAt,
-			updatedAt: schema.workspaces.updatedAt
-		})
-		.from(schema.workspaces)
-		.innerJoin(schema.users, eq(schema.workspaces.id, schema.users.workspaceId))
-		.where(eq(schema.users.identityId, identity!.id))
-		.execute();
+  const workspaces = await db
+    .select({
+      id: schema.workspaces.id,
+      slug: schema.workspaces.slug,
+      name: schema.workspaces.name,
+      createdAt: schema.workspaces.createdAt,
+      updatedAt: schema.workspaces.updatedAt
+    })
+    .from(schema.workspaces)
+    .innerJoin(schema.users, eq(schema.workspaces.id, schema.users.workspaceId))
+    .where(eq(schema.users.identityId, identity!.id))
+    .execute();
 
-	return { workspaces };
+  return { workspaces };
 };
