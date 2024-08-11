@@ -9,18 +9,7 @@ const config = {
 
   kit: {
     // https://kit.svelte.dev/docs/adapter-cloudflare
-    adapter: adapter({
-      routes: {
-        include: ['/*'],
-        exclude: ['<all>'],
-      },
-      platformProxy: {
-        configPath: 'wrangler.toml',
-        environment: undefined,
-        experimentalJsonConfig: false,
-        persist: false,
-      },
-    }),
+    adapter: adapter(),
   },
 };
 
