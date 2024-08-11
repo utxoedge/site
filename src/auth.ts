@@ -19,14 +19,18 @@ export const { handle, signIn, signOut } = SvelteKitAuth(
       session: { strategy: 'jwt' },
       callbacks: {
         async jwt({ token, user }) {
-          token.id = user.id;
-          token.kind = user.kind;
+          if (user) {
+            token.id = user.id;
+            token.kind = user.kind;
+          }
 
           return token;
         },
         async session({ session, token }) {
-          session.user.id = token.id as string;
-          session.user.kind = token.kind as 'user' | 'support' | 'admin';
+          if (session.user) {
+            session.user.id = token.id as string;
+            session.user.kind = token.kind as 'user' | 'support' | 'admin';
+          }
 
           return session;
         },
