@@ -33,7 +33,7 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
           },
         });
 
-        console.info('wow');
+        console.error('wow');
 
         if (!workspace) {
           throw redirect(302, '/workspaces');
@@ -51,7 +51,7 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
           })
           .execute();
 
-        console.info('fuck');
+        console.error('fuck');
 
         if (!isMember) {
           throw redirect(302, '/workspaces');
