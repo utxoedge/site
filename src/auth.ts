@@ -17,6 +17,20 @@ export const { handle, signIn, signOut } = SvelteKitAuth(
       secret: env.AUTH_SECRET,
       trustHost: true,
       session: { strategy: 'jwt' },
+      callbacks: {
+        async jwt({ token, user }) {
+          token.id = user.id;
+          token.kind = user.kind;
+
+          return token;
+        },
+        async session({ session, token }) {
+          session.user.id = token.id as string;
+          session.user.kind = token.kind as 'user' | 'support' | 'admin';
+
+          return session;
+        },
+      },
       providers: [
         GitHub({
           clientId: env.AUTH_GITHUB_ID,
