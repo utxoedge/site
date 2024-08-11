@@ -41,7 +41,7 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
 
         const isMember = await db.query.users
           .findFirst({
-            columns: {},
+            columns: { id: true },
             where(fields, operators) {
               return operators.and(
                 operators.eq(fields.identityId, session.user.id!),
