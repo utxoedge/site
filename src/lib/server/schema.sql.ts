@@ -6,10 +6,10 @@ import {
   unique,
 } from 'drizzle-orm/sqlite-core';
 
-import { Xid } from '../../lib/utils/xid';
+import { createId } from '../../lib/utils/xid';
+import { generateToken } from '../../lib/utils/apiKey';
 import { relations } from 'drizzle-orm';
-
-export const createId = () => new Xid().toString();
+import type { Chain } from '$lib/validations';
 
 export const xid = (name: string) => text(name, { length: 20 });
 
@@ -80,6 +80,7 @@ export const identitiesRelations = relations(identities, ({ many }) => ({
 
 export const workspacesRelations = relations(workspaces, ({ many }) => ({
   identities: many(users),
+  apiKeys: many(apiKeys),
 }));
 
 export const usersRelations = relations(users, ({ one }) => ({
@@ -90,5 +91,38 @@ export const usersRelations = relations(users, ({ one }) => ({
   identity: one(identities, {
     fields: [users.identityId],
     references: [identities.id],
+  }),
+}));
+
+export const apiKeys = sqliteTable(
+  'api_keys',
+  {
+    id: primary(),
+
+    name: text('name'),
+
+    token: text('token')
+      .notNull()
+      .unique()
+      .$defaultFn(() => generateToken()),
+
+    chain: text('chain', { mode: 'json' }).notNull().$type<Chain>(),
+
+    workspaceId: xid('workspace_id')
+      .notNull()
+      .references(() => workspaces.id),
+
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (table) => ({
+    workspaceIdx: index('workspace_id_idx_api_keys').on(table.workspaceId),
+  }),
+);
+
+export const apiKeysRelations = relations(apiKeys, ({ one }) => ({
+  workspace: one(workspaces, {
+    fields: [apiKeys.workspaceId],
+    references: [workspaces.id],
   }),
 }));

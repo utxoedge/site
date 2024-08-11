@@ -8,6 +8,27 @@
       "when": 1723342766079,
       "tag": "0000_overconfident_sunspot",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1723412338528,
+      "tag": "0001_fancy_kabuki",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1723413446834,
+      "tag": "0002_spicy_prodigy",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1723413497392,
+      "tag": "0003_parched_shape",
+      "breakpoints": true
     }
   ]
 }

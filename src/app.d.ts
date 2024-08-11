@@ -1,4 +1,4 @@
-import type { WorkspacesSelect } from '$lib/server/schema.sql';
+import 'unplugin-icons/types/svelte';
 
 type ISODateString = string;
 
@@ -24,9 +24,7 @@ declare global {
   namespace App {
     // interface Error {}
     // interface Locals {}
-    interface Locals {
-      currentWorkspace: WorkspacesSelect | undefined;
-    }
+    // interface Locals {}
     // interface PageData {}
     // interface PageState {}
     interface Platform {

@@ -52,8 +52,6 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
         if (!isMember) {
           throw redirect(302, '/workspaces');
         }
-
-        event.locals.currentWorkspace = workspace;
       }
     }
   }

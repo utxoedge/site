@@ -202,3 +202,5 @@ function getPid(): number {
 
   return (buf[0] << 8) | buf[1];
 }
+
+export const createId = () => new Xid().toString();
