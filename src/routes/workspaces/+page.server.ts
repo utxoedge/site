@@ -49,28 +49,30 @@ export const actions: Actions = {
 
     const session = await locals.auth();
 
-    await db.transaction(async (dbTx) => {
-      // Create the workspace
-      const [workspace] = await dbTx
-        .insert(schema.workspaces)
-        .values({ name: form.data.name, slug: form.data.slug })
-        .returning({ id: schema.workspaces.id });
+    console.log('creating stuff');
 
-      // Add a system user, useful if we ever need to do some automated changes to the workspace
-      await dbTx
-        .insert(schema.users)
-        .values({ workspaceId: workspace.id, isSystem: true })
-        .execute();
+    // Create the workspace
+    const [workspace] = await db
+      .insert(schema.workspaces)
+      .values({ name: form.data.name, slug: form.data.slug })
+      .returning({ id: schema.workspaces.id });
 
-      // Add the identity to the workspace
-      await dbTx
-        .insert(schema.users)
-        .values({
-          workspaceId: workspace.id,
-          identityId: session!.user.identityId,
-        })
-        .execute();
-    });
+    // Add a system user, useful if we ever need to do some automated changes to the workspace
+    await db
+      .insert(schema.users)
+      .values({ workspaceId: workspace.id, isSystem: true })
+      .execute();
+
+    // Add the identity to the workspace
+    await db
+      .insert(schema.users)
+      .values({
+        workspaceId: workspace.id,
+        identityId: session!.user.identityId,
+      })
+      .execute();
+
+    console.log('finished');
 
     return redirect(302, `/workspaces`);
   },
