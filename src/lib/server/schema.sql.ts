@@ -3,7 +3,7 @@ import {
   text,
   integer,
   index,
-  unique
+  unique,
 } from 'drizzle-orm/sqlite-core';
 
 import { Xid } from '../../lib/utils/xid';
@@ -30,24 +30,28 @@ export const identities = sqliteTable('identities', {
   id: primary(),
   name: text('name'),
   email: text('email').unique().notNull(),
+  githubId: text('github_id').unique(),
+  image: text('image'),
   passwordHash: text('password_hash').notNull(),
+  provider: text('provider').$type<'github' | 'credentials'>().notNull(),
   kind: text('kind').$type<'support' | 'admin' | 'user'>().notNull(),
   isEmailVerified: integer('is_email_verified', { mode: 'boolean' }).default(
-    false
+    false,
   ),
-
   createdAt: createdAt(),
-  updatedAt: updatedAt()
+  updatedAt: updatedAt(),
 });
 
 export const workspaces = sqliteTable('workspaces', {
   id: primary(),
   slug: text('slug').unique().notNull(),
   name: text('name'),
+  image: text('image'),
 
   createdAt: createdAt(),
-  updatedAt: updatedAt()
+  updatedAt: updatedAt(),
 });
+export type WorkspacesSelect = typeof workspaces.$inferSelect;
 
 export const users = sqliteTable(
   'users',
@@ -61,30 +65,30 @@ export const users = sqliteTable(
     identityId: xid('identity_id').references(() => identities.id),
 
     createdAt: createdAt(),
-    updatedAt: updatedAt()
+    updatedAt: updatedAt(),
   },
   (table) => ({
     workspaceIdx: index('workspace_id_idx').on(table.workspaceId),
     identityIdx: index('identity_id_idx').on(table.identityId),
-    identityWorkspaceIdx: unique().on(table.identityId, table.workspaceId)
-  })
+    identityWorkspaceIdx: unique().on(table.identityId, table.workspaceId),
+  }),
 );
 
 export const identitiesRelations = relations(identities, ({ many }) => ({
-  workspaces: many(users)
+  workspaces: many(users),
 }));
 
 export const workspacesRelations = relations(workspaces, ({ many }) => ({
-  identities: many(users)
+  identities: many(users),
 }));
 
 export const usersRelations = relations(users, ({ one }) => ({
   workspace: one(workspaces, {
     fields: [users.workspaceId],
-    references: [workspaces.id]
+    references: [workspaces.id],
   }),
   identity: one(identities, {
     fields: [users.identityId],
-    references: [identities.id]
-  })
+    references: [identities.id],
+  }),
 }));

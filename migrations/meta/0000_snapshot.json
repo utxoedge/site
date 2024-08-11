@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "01978374-21a2-4e89-bc55-3d1db70d74df",
+  "id": "3fa3332d-b2f6-4768-b1de-4fa9aacdc83e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "identities": {
@@ -28,8 +28,29 @@
           "notNull": true,
           "autoincrement": false
         },
+        "github_id": {
+          "name": "github_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "password_hash": {
           "name": "password_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "provider": {
+          "name": "provider",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -70,6 +91,13 @@
           "name": "identities_email_unique",
           "columns": [
             "email"
+          ],
+          "isUnique": true
+        },
+        "identities_github_id_unique": {
+          "name": "identities_github_id_unique",
+          "columns": [
+            "github_id"
           ],
           "isUnique": true
         }
@@ -199,6 +227,13 @@
         },
         "name": {
           "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "image": {
+          "name": "image",
           "type": "text",
           "primaryKey": false,
           "notNull": false,

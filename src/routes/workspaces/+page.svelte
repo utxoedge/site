@@ -17,7 +17,10 @@
 </script>
 
 <div class="flex flex-col items-center justify-center gap-10 p-12">
-  <h1 class="text-3xl">Workspaces</h1>
+  <div>
+    <h1 class="text-3xl">Workspaces</h1>
+    <Button href={`/workspaces/create`}>Create</Button>
+  </div>
 
   <h2 class="text-lg">
     You're a member of {data.workspaces.length} workspaces
@@ -34,7 +37,7 @@
           <Card.Content>
             {#if browser}
               Created on {formattedDate(
-                workspace.createdAt as unknown as string
+                workspace.createdAt as unknown as string,
               )}
             {/if}
           </Card.Content>
