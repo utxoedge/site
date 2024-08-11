@@ -1,13 +1,28 @@
 <script lang="ts">
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
+
   import { browser } from '$app/environment';
 
   import type { PageData } from './$types';
 
   // Components
   import * as Card from '$lib/components/ui/card';
-  import { Button } from '$lib/components/ui/button';
+  import { Button, buttonVariants } from '$lib/components/ui/button';
+  import * as Dialog from '$lib/components/ui/dialog';
+  import * as Form from '$lib/components/ui/form';
+  import { Input } from '$lib/components/ui/input';
+
+  // Validations
+  import { createWorkspaceSchema } from '$lib/validations';
 
   let { data }: { data: PageData } = $props();
+
+  const form = superForm(data.form, {
+    validators: zodClient(createWorkspaceSchema),
+  });
+
+  const { form: formData, enhance } = form;
 
   const formattedDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -17,9 +32,52 @@
 </script>
 
 <div class="flex flex-col items-center justify-center gap-10 p-12">
-  <div>
+  <div class="flex items-center justify-between">
     <h1 class="text-3xl">Workspaces</h1>
-    <Button href={`/workspaces/create`}>Create</Button>
+
+    <Dialog.Root>
+      <Dialog.Trigger class={buttonVariants({ variant: 'outline' })}
+        >Create Workspace</Dialog.Trigger
+      >
+      <Dialog.Content class="sm:max-w-[425px]">
+        <Dialog.Header>
+          <Dialog.Title>Edit profile</Dialog.Title>
+          <Dialog.Description>
+            Make changes to your profile here. Click save when you're done.
+          </Dialog.Description>
+        </Dialog.Header>
+        <form method="post" use:enhance>
+          <div class="grid gap-4 py-4">
+            <Form.Field {form} name="slug">
+              <Form.Control let:attrs>
+                <Form.Label>Name</Form.Label>
+                <Input {...attrs} bind:value={$formData.slug} />
+              </Form.Control>
+              <Form.FieldErrors />
+            </Form.Field>
+
+            <Form.Field {form} name="name">
+              <Form.Control let:attrs>
+                <Form.Label>Display Name</Form.Label>
+                <Input {...attrs} bind:value={$formData.name} />
+              </Form.Control>
+              <Form.FieldErrors />
+            </Form.Field>
+          </div>
+          <Dialog.Footer class="flex justify-between">
+            <Button type="submit">
+              <span>
+                Create <span aria-hidden="true">&rarr;</span>
+              </span>
+            </Button>
+
+            <Button variant="outline" onclick={() => window.history.back()}
+              >Go back</Button
+            >
+          </Dialog.Footer>
+        </form>
+      </Dialog.Content>
+    </Dialog.Root>
   </div>
 
   <h2 class="text-lg">
