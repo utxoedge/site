@@ -10,6 +10,7 @@ declare module '@auth/core/types' {
 
   interface User {
     id: string;
+    identityId: string;
     email: string;
     kind: 'support' | 'admin' | 'user';
     name?: string | null;

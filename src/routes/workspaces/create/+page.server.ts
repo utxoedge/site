@@ -43,7 +43,10 @@ export const actions: Actions = {
       // Add the identity to the workspace
       await dbTx
         .insert(schema.users)
-        .values({ workspaceId: workspace.id, identityId: session!.user.id! })
+        .values({
+          workspaceId: workspace.id,
+          identityId: session!.user.identityId,
+        })
         .execute();
     });
 

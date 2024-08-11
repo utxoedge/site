@@ -24,7 +24,7 @@ export const load: PageServerLoad = async ({ platform, locals }) => {
     })
     .from(schema.workspaces)
     .innerJoin(schema.users, eq(schema.workspaces.id, schema.users.workspaceId))
-    .where(eq(schema.users.identityId, session!.user.id!))
+    .where(eq(schema.users.identityId, session!.user.identityId))
     .execute();
 
   return { workspaces };

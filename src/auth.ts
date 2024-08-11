@@ -20,8 +20,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth(
       callbacks: {
         async jwt({ token, user }) {
           if (user) {
-            console.log(user);
-            token.userId = user.id;
+            token.identityId = user.identityId;
             token.kind = user.kind;
           }
 
@@ -29,7 +28,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth(
         },
         async session({ session, token }) {
           if (session.user) {
-            session.user.id = token.userId as string;
+            session.user.identityId = token.identityId as string;
             session.user.kind = token.kind as 'user' | 'support' | 'admin';
           }
 
@@ -65,7 +64,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth(
             const user = _user[0];
 
             return {
-              userId: user.id,
+              identityId: user.id,
               email: user.email,
               name: user.name,
               image: user.image,
@@ -103,7 +102,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth(
             }
 
             return {
-              id: user.id,
+              identityId: user.id,
               email: user.email,
               name: user.name,
               image: user.image,
