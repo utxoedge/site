@@ -12,8 +12,6 @@ export const load: PageServerLoad = async ({ platform, locals }) => {
 
   const db = drizzle(platform!.env.ACCOUNTS);
 
-  console.log(session!.user);
-
   const workspaces = await db
     .select({
       id: schema.workspaces.id,
