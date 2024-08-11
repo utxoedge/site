@@ -7,6 +7,8 @@ import { drizzle } from '$lib/server/drizzle';
 const protectedPaths = ['/workspaces', '/profile'];
 
 const authorizationHandle: Handle = async ({ event, resolve }) => {
+  console.log(event.url.pathname);
+
   if (protectedPaths.some((path) => event.url.pathname.startsWith(path))) {
     const session = await event.locals.auth();
 
@@ -20,6 +22,8 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
     if (event.url.pathname.startsWith('/workspaces')) {
       const parts = event.url.pathname.split('/');
       const workspaceIdOrSlug = parts[1];
+
+      console.log(workspaceIdOrSlug);
 
       if (workspaceIdOrSlug) {
         const db = drizzle(event.platform!.env.ACCOUNTS);
