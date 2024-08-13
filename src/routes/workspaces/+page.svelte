@@ -34,53 +34,48 @@
 <div
   class="flex h-full flex-col items-center justify-center gap-10 bg-muted/40 p-12"
 >
-  <div class="flex items-center justify-between gap-12">
-    <h1 class="text-3xl">Workspaces</h1>
+  <h1 class="text-3xl">Workspaces</h1>
 
-    <Dialog.Root>
-      <Dialog.Trigger class={buttonVariants({ variant: 'default' })}
-        >Create Workspace</Dialog.Trigger
-      >
-      <Dialog.Content class="sm:max-w-[425px]">
-        <Dialog.Header>
-          <Dialog.Title>Edit profile</Dialog.Title>
-          <Dialog.Description>
-            Make changes to your profile here. Click save when you're done.
-          </Dialog.Description>
-        </Dialog.Header>
-        <form method="post" use:enhance>
-          <div class="grid gap-4 py-4">
-            <Form.Field {form} name="slug">
-              <Form.Control let:attrs>
-                <Form.Label>Name</Form.Label>
-                <Input {...attrs} bind:value={$formData.slug} />
-              </Form.Control>
-              <Form.FieldErrors />
-            </Form.Field>
+  <Dialog.Root>
+    <Dialog.Trigger class={buttonVariants({ variant: 'default' })}
+      >Create Workspace</Dialog.Trigger
+    >
+    <Dialog.Content class="sm:max-w-[425px]">
+      <Dialog.Header>
+        <Dialog.Title>Create Workspace</Dialog.Title>
+        <Dialog.Description>
+          Please provide a unique name and display name for your workspace.
+          Click save when you're done.
+        </Dialog.Description>
+      </Dialog.Header>
+      <form method="post" use:enhance>
+        <div class="grid gap-4 py-4">
+          <Form.Field {form} name="slug">
+            <Form.Control let:attrs>
+              <Form.Label>Name</Form.Label>
+              <Input {...attrs} bind:value={$formData.slug} />
+            </Form.Control>
+            <Form.FieldErrors />
+          </Form.Field>
 
-            <Form.Field {form} name="name">
-              <Form.Control let:attrs>
-                <Form.Label>Display Name</Form.Label>
-                <Input {...attrs} bind:value={$formData.name} />
-              </Form.Control>
-              <Form.FieldErrors />
-            </Form.Field>
-          </div>
-          <Dialog.Footer class="flex justify-between">
-            <Button type="submit">
-              <span>
-                Create <span aria-hidden="true">&rarr;</span>
-              </span>
-            </Button>
-
-            <Button variant="outline" onclick={() => window.history.back()}
-              >Go back</Button
-            >
-          </Dialog.Footer>
-        </form>
-      </Dialog.Content>
-    </Dialog.Root>
-  </div>
+          <Form.Field {form} name="name">
+            <Form.Control let:attrs>
+              <Form.Label>Display Name</Form.Label>
+              <Input {...attrs} bind:value={$formData.name} />
+            </Form.Control>
+            <Form.FieldErrors />
+          </Form.Field>
+        </div>
+        <Dialog.Footer class="flex justify-between">
+          <Button type="submit">
+            <span>
+              Create <span aria-hidden="true">&rarr;</span>
+            </span>
+          </Button>
+        </Dialog.Footer>
+      </form>
+    </Dialog.Content>
+  </Dialog.Root>
 
   <h2 class="text-lg">
     You're a member of {data.workspaces.length} workspaces
