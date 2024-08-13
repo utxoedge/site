@@ -49,8 +49,6 @@ export const actions: Actions = {
 
     const session = await locals.auth();
 
-    console.log('creating stuff');
-
     // Create the workspace
     const [workspace] = await db
       .insert(schema.workspaces)
@@ -71,8 +69,6 @@ export const actions: Actions = {
         identityId: session!.user.identityId,
       })
       .execute();
-
-    console.log('finished');
 
     return redirect(302, `/workspaces`);
   },
