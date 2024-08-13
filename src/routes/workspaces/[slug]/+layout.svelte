@@ -42,6 +42,10 @@
                 <a href={`/workspaces/${workspace.slug}`}>{workspace.slug}</a>
               </DropdownMenu.Item>
             {/each}
+          {:else}
+            <DropdownMenu.Item>
+              <a href="/workspaces">Create</a>
+            </DropdownMenu.Item>
           {/if}
         </DropdownMenu.Group>
       </DropdownMenu.Content>
@@ -99,7 +103,7 @@
     </DropdownMenu.Root>
   </nav>
   <main
-    class="flex h-full flex-1 flex-col gap-12 overflow-y-auto rounded-tl border-l border-t bg-muted/40 px-10 pb-4 pt-8 shadow-inner"
+    class="flex h-full flex-1 flex-col gap-12 overflow-y-auto border-t bg-muted/40 px-10 pb-4 pt-8 shadow-inner"
   >
     {@render children()}
   </main>
