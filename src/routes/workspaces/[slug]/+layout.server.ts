@@ -11,13 +11,9 @@ import type { LayoutServerLoad } from './$types';
 export const load: LayoutServerLoad = async ({ params, locals, platform }) => {
   const workspaceIdOrSlug = params.slug;
 
-  console.log(workspaceIdOrSlug);
-
   const session = await locals.auth();
 
   const db = drizzle(platform!.env.ACCOUNTS);
-
-  console.log(session);
 
   const workspaces = await db
     .select({
@@ -32,13 +28,9 @@ export const load: LayoutServerLoad = async ({ params, locals, platform }) => {
     .where(eq(schema.users.identityId, session!.user.identityId))
     .execute();
 
-  console.log(workspaces);
-
   const currentWorkspace = workspaces.find(
     (w) => w.id === workspaceIdOrSlug || w.slug === workspaceIdOrSlug,
   );
-
-  console.log(currentWorkspace);
 
   if (!currentWorkspace) {
     return redirect(302, '/workspaces');
