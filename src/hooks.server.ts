@@ -42,7 +42,7 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
             columns: { id: true },
             where(fields, operators) {
               return operators.and(
-                operators.eq(fields.identityId, session.user.id!),
+                operators.eq(fields.identityId, session.user.identityId),
                 operators.eq(fields.workspaceId, workspace.id),
               );
             },
