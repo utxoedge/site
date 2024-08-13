@@ -45,12 +45,14 @@
     table.column({ accessor: 'name', header: 'Name' }),
 
     table.column({
+      id: 'chain.name',
       accessor: 'chain',
       header: 'Chain',
       cell: ({ value }) => value.name,
     }),
 
     table.column({
+      id: 'chain.network',
       accessor: 'chain',
       header: 'Network',
       cell: ({ value }) => value.name,
