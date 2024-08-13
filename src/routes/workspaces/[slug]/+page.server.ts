@@ -11,6 +11,8 @@ export const load: PageServerLoad = async ({ url, locals, platform }) => {
 
   const { page, pageSize } = getPaginationParams(url);
 
+  console.log(page, pageSize);
+
   const apiKeys = await db.query.apiKeys
     .findMany({
       where(fields, { and, eq }) {
@@ -24,6 +26,8 @@ export const load: PageServerLoad = async ({ url, locals, platform }) => {
     })
     .execute();
 
+  console.log(apiKeys);
+
   const result = await db
     .select({
       count: count(schema.apiKeys.id),
@@ -36,6 +40,8 @@ export const load: PageServerLoad = async ({ url, locals, platform }) => {
       ),
     )
     .execute();
+
+  console.log(result);
 
   const totalCount = result[0]?.count;
 
