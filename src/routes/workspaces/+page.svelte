@@ -32,11 +32,11 @@
 </script>
 
 <div class="flex flex-col items-center justify-center gap-10 p-12">
-  <div class="flex items-center justify-between">
+  <div class="flex items-center justify-between gap-12">
     <h1 class="text-3xl">Workspaces</h1>
 
     <Dialog.Root>
-      <Dialog.Trigger class={buttonVariants({ variant: 'outline' })}
+      <Dialog.Trigger class={buttonVariants({ variant: 'default' })}
         >Create Workspace</Dialog.Trigger
       >
       <Dialog.Content class="sm:max-w-[425px]">
