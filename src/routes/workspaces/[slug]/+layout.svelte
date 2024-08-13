@@ -68,7 +68,7 @@
 
       <DropdownMenu.Content>
         <DropdownMenu.Group>
-          <DropdownMenu.Label>My Account</DropdownMenu.Label>
+          <DropdownMenu.Label>Account</DropdownMenu.Label>
           <DropdownMenu.Separator />
 
           <DropdownMenu.Item>
@@ -76,7 +76,7 @@
           </DropdownMenu.Item>
 
           <DropdownMenu.Item>
-            <a href="/account">Settings</a>
+            <a href="/profile">Profile</a>
           </DropdownMenu.Item>
 
           {#if data.user.kind === 'admin' || data.user.kind === 'support'}
