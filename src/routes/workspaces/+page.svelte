@@ -31,9 +31,7 @@
   };
 </script>
 
-<div
-  class="flex h-full flex-col items-center justify-center gap-10 bg-muted/40 p-12"
->
+<div class="flex h-full flex-col items-center gap-10 bg-muted/40 p-12">
   <h1 class="text-3xl">Workspaces</h1>
 
   <Dialog.Root>
