@@ -112,11 +112,14 @@ export const apiKeys = sqliteTable(
       .notNull()
       .references(() => workspaces.id),
 
+    deleted: integer('deleted', { mode: 'boolean' }).default(false),
+
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
   (table) => ({
     workspaceIdx: index('workspace_id_idx_api_keys').on(table.workspaceId),
+    deleted: index('deleted_idx_api_keys').on(table.deleted),
   }),
 );
 

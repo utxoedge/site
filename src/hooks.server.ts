@@ -50,10 +50,20 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
           .execute();
 
         if (!isMember) {
+          event.locals.currentWorkspaceId = undefined;
+
           throw error(404, 'Not found');
         }
+
+        event.locals.currentWorkspaceId = workspace.id;
+      } else {
+        event.locals.currentWorkspaceId = undefined;
       }
+    } else {
+      event.locals.currentWorkspaceId = undefined;
     }
+  } else {
+    event.locals.currentWorkspaceId = undefined;
   }
 
   return resolve(event);

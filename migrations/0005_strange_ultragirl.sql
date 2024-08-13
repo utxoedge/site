@@ -1,0 +1,1 @@
+CREATE INDEX `deleted_idx_api_keys` ON `api_keys` (`deleted`);

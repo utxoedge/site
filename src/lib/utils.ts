@@ -60,3 +60,21 @@ export const flyAndScale = (
     easing: cubicOut,
   };
 };
+
+export function getPaginationParams(url: URL) {
+  const unparsedPage = url.searchParams.get('page') ?? '1';
+  const unparsedPageSize = url.searchParams.get('pageSize') ?? '10';
+
+  let page = parseInt(unparsedPage, 10);
+  let pageSize = parseInt(unparsedPageSize, 10);
+
+  if (isNaN(page) || page < 1) {
+    page = 1;
+  }
+
+  if (isNaN(pageSize) || pageSize < 1 || pageSize > 20) {
+    pageSize = 10;
+  }
+
+  return { page, pageSize };
+}

@@ -13,7 +13,7 @@ export const createWorkspaceSchema = z.object({
 
 export const chainSchema = z.union([
   z.object({
-    chain: z.literal('cardano'),
+    name: z.literal('cardano'),
     network: z.union([
       z.literal('mainnet'),
       z.literal('preprod'),
@@ -21,8 +21,14 @@ export const chainSchema = z.union([
     ]),
   }),
   z.object({
-    chain: z.literal('bitcoin'),
+    name: z.literal('bitcoin'),
     network: z.union([z.literal('mainnet'), z.literal('testnet')]),
   }),
 ]);
 export type Chain = z.infer<typeof chainSchema>;
+
+export const createApiKeySchema = z.object({
+  name: z.string().min(1).nullish(),
+  chain: chainSchema,
+});
+export type CreateApiKey = z.infer<typeof createApiKeySchema>;
