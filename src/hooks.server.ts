@@ -1,4 +1,4 @@
-import { redirect, type Handle } from '@sveltejs/kit';
+import { redirect, type Handle, error } from '@sveltejs/kit';
 import { handle as authenticationHandle } from './auth';
 import { sequence } from '@sveltejs/kit/hooks';
 
@@ -34,7 +34,7 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
         });
 
         if (!workspace) {
-          throw redirect(302, '/workspaces');
+          throw error(404, 'Not found');
         }
 
         const isMember = await db.query.users
@@ -50,7 +50,7 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
           .execute();
 
         if (!isMember) {
-          throw redirect(302, '/workspaces');
+          throw error(404, 'Not found');
         }
       }
     }
