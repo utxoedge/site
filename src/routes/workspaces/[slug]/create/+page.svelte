@@ -24,6 +24,8 @@
   });
 
   const { form: formData, enhance } = form;
+
+  const selectedChain = $derived($formData.chain.name);
 </script>
 
 <Card.Root class="w-3/4 self-center">
@@ -52,7 +54,6 @@
               </Select.Trigger>
               <Select.Content>
                 <Select.Group>
-                  <Select.Label>Vendors</Select.Label>
                   <Select.Item value="cardano" label="Cardano"
                     >Cardano</Select.Item
                   >
@@ -78,8 +79,7 @@
               </Select.Trigger>
               <Select.Content>
                 <Select.Group>
-                  <Select.Label>Vendors</Select.Label>
-                  {#if $formData.chain.name === 'cardano'}
+                  {#if selectedChain === 'cardano'}
                     <Select.Item value="mainnet" label="Mainnet"
                       >Mainnet</Select.Item
                     >
