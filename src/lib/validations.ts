@@ -29,7 +29,7 @@ export type Chain = z.infer<typeof chainSchema>;
 
 // Define the base structure for CreateApiKey
 const createApiKeyBase = z.object({
-  keyName: z.string().min(1),
+  keyName: z.string().min(1).nullish(),
   name: z.enum(['cardano', 'bitcoin']),
   network: z.string(),
 });
