@@ -13,7 +13,7 @@ import type { PageServerLoad, Actions } from './$types';
 
 export const load: PageServerLoad = async () => {
   const form = await superValidate(
-    { chain: { name: 'cardano', network: 'mainnet' } },
+    { name: 'cardano', network: 'mainnet' },
     zod(createApiKeySchema),
   );
 
@@ -36,8 +36,11 @@ export const actions: Actions = {
     const [apiKey] = await db
       .insert(schema.apiKeys)
       .values({
-        name: form.data.name,
-        chain: form.data.chain,
+        name: form.data.keyName,
+        chain:
+          form.data.name === 'cardano'
+            ? { name: 'cardano', network: form.data.network }
+            : { name: 'bitcoin', network: form.data.network },
         workspaceId: locals.currentWorkspaceId!,
       })
       .returning();

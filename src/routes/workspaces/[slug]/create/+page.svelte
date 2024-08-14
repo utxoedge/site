@@ -19,12 +19,11 @@
 
   let form = superForm(data.form, {
     validators: zodClient(createApiKeySchema),
-    dataType: 'json',
   });
 
   let { form: formData, enhance } = form;
 
-  let selectedChain = $formData.chain.name;
+  let selectedChain = $formData.name;
 
   $: networkOptions =
     selectedChain === 'cardano'
@@ -39,7 +38,7 @@
         ];
 
   $: if (selectedChain) {
-    $formData.chain.network = 'mainnet';
+    $formData.network = 'mainnet';
   }
 </script>
 
@@ -51,7 +50,7 @@
   <form method="post" use:enhance>
     <Card.Content>
       <div class="grid grid-cols-3 gap-8">
-        <Form.Field {form} name="name">
+        <Form.Field {form} name="keyName">
           <Form.Control let:attrs>
             <Form.Label>Name</Form.Label>
             <Input {...attrs} bind:value={$formData.name} />
@@ -59,7 +58,7 @@
           <Form.FieldErrors />
         </Form.Field>
 
-        <Form.Field {form} name="chain.name">
+        <Form.Field {form} name="name">
           <Form.Control let:attrs>
             <Form.Label>Blockchain</Form.Label>
 
@@ -84,13 +83,13 @@
                   >
                 </Select.Group>
               </Select.Content>
-              <Select.Input {...attrs} bind:value={$formData.chain.name} />
+              <Select.Input {...attrs} bind:value={$formData.name} />
             </Select.Root>
           </Form.Control>
           <Form.FieldErrors />
         </Form.Field>
 
-        <Form.Field {form} name="chain.network">
+        <Form.Field {form} name="network">
           <Form.Control let:attrs>
             <Form.Label>Network</Form.Label>
 
@@ -107,7 +106,7 @@
                   {/each}
                 </Select.Group>
               </Select.Content>
-              <Select.Input {...attrs} bind:value={$formData.chain.network} />
+              <Select.Input {...attrs} bind:value={$formData.network} />
             </Select.Root>
           </Form.Control>
           <Form.FieldErrors />

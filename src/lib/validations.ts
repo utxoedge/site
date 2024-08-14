@@ -27,8 +27,10 @@ export const chainSchema = z.union([
 ]);
 export type Chain = z.infer<typeof chainSchema>;
 
-export const createApiKeySchema = z.object({
-  name: z.string().min(1).nullish(),
-  chain: chainSchema,
-});
+export const createApiKeySchema = z
+  .object({
+    keyName: z.string().min(1).nullish(),
+  })
+  .and(chainSchema);
+
 export type CreateApiKey = z.infer<typeof createApiKeySchema>;
