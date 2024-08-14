@@ -8,10 +8,12 @@ NODE_VERSION = ">=21.1.0"
 
 [[kv_namespaces]]
 id = "c1e7a9c9c30e495c9c4dd3188c47f842"
+preview_id = "c1e7a9c9c30e495c9c4dd3188c47f842"
 binding = "TOKENS"
 
 [[d1_databases]]
 database_id = "27e73148-81ae-4687-be41-0d86032971e0"
+preview_database_id = "27e73148-81ae-4687-be41-0d86032971e0"
 binding = "ACCOUNTS"
 database_name = "ACCOUNTS"
 
