@@ -26,8 +26,6 @@ export const actions: Actions = {
 
     const form = await superValidate(request, zod(createApiKeySchema));
 
-    console.log(form);
-
     if (!form.valid) {
       // Again, return { form } and things will just work.
       return fail(400, { form });
