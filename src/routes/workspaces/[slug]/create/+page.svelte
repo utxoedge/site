@@ -23,7 +23,7 @@
 
   let { form: formData, enhance } = form;
 
-  let selectedChain = $formData.name;
+  $: selectedChain = $formData.name;
 
   $: networkOptions =
     selectedChain === 'cardano'
@@ -62,13 +62,7 @@
           <Form.Control let:attrs>
             <Form.Label>Blockchain</Form.Label>
 
-            <Select.Root
-              portal={null}
-              onSelectedChange={(v) => {
-                // @ts-expect-error it is what it is
-                selectedChain = v.value;
-              }}
-            >
+            <Select.Root portal={null}>
               <Select.Trigger>
                 <Select.Value placeholder="Select a blockchain" />
               </Select.Trigger>
