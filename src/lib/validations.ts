@@ -11,26 +11,47 @@ export const createWorkspaceSchema = z.object({
   slug: z.string().min(1),
 });
 
-export const chainSchema = z.union([
+const cardanoNetworks = ['mainnet', 'preprod', 'preview'] as const;
+const bitcoinNetworks = ['mainnet', 'testnet'] as const;
+
+export const chainSchema = z.discriminatedUnion('name', [
   z.object({
     name: z.literal('cardano'),
-    network: z.union([
-      z.literal('mainnet'),
-      z.literal('preprod'),
-      z.literal('preview'),
-    ]),
+    network: z.enum(cardanoNetworks),
   }),
   z.object({
     name: z.literal('bitcoin'),
-    network: z.union([z.literal('mainnet'), z.literal('testnet')]),
+    network: z.enum(bitcoinNetworks),
   }),
 ]);
+
 export type Chain = z.infer<typeof chainSchema>;
 
-export const createApiKeySchema = z
-  .object({
-    keyName: z.string().min(1).nullish(),
-  })
-  .and(chainSchema);
+// Define the base structure for CreateApiKey
+const createApiKeyBase = z.object({
+  keyName: z.string().min(1),
+  name: z.enum(['cardano', 'bitcoin']),
+  network: z.string(),
+});
 
-export type CreateApiKey = z.infer<typeof createApiKeySchema>;
+// Define the type without circular reference
+export type CreateApiKey = z.infer<typeof createApiKeyBase>;
+
+// Create the schema with refinement
+export const createApiKeySchema = createApiKeyBase.refine(
+  (data): data is CreateApiKey => {
+    if (data.name === 'cardano') {
+      // @ts-expect-error it is what it is
+      return cardanoNetworks.includes(data.network);
+    } else if (data.name === 'bitcoin') {
+      // @ts-expect-error it is what it is
+      return bitcoinNetworks.includes(data.network);
+    }
+
+    return false;
+  },
+  {
+    message: 'Network must be valid for the selected blockchain',
+    path: ['network'],
+  },
+);
