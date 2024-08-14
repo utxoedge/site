@@ -20,6 +20,7 @@
 
   const form = superForm(data.form, {
     validators: zodClient(createApiKeySchema),
+    dataType: 'json',
   });
 
   const { form: formData, enhance } = form;
