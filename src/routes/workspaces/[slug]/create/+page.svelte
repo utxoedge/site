@@ -15,8 +15,7 @@
   // Locals
   import type { PageData } from './$types';
 
-  // Props
-  let { data }: { data: PageData } = $props();
+  export let data: PageData;
 
   let form = superForm(data.form, {
     validators: zodClient(createApiKeySchema),
@@ -25,9 +24,9 @@
 
   let { form: formData, enhance } = form;
 
-  let selectedChain = $state($formData.chain.name);
+  let selectedChain = $formData.chain.name;
 
-  let networkOptions = $derived(
+  $: networkOptions =
     selectedChain === 'cardano'
       ? [
           { value: 'mainnet', label: 'Mainnet' },
@@ -37,14 +36,11 @@
       : [
           { value: 'mainnet', label: 'Mainnet' },
           { value: 'testnet', label: 'Testnet' },
-        ],
-  );
+        ];
 
-  $effect(() => {
-    if (selectedChain) {
-      $formData.chain.network = 'mainnet';
-    }
-  });
+  $: if (selectedChain) {
+    $formData.chain.network = 'mainnet';
+  }
 </script>
 
 <Card.Root class="w-3/4 self-center">
