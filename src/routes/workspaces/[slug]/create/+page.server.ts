@@ -24,6 +24,12 @@ export const actions: Actions = {
   default: async ({ request, params, platform, locals }) => {
     const workspaceIdOrSlug = params.slug;
 
+    const formData = await request.formData();
+
+    console.log(formData.get('keyName'));
+    console.log(formData.get('name'));
+    console.log(formData.get('network'));
+
     const form = await superValidate(request, zod(createApiKeySchema));
 
     console.log(form);
