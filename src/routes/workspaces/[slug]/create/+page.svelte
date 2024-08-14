@@ -25,7 +25,7 @@
 
   const { form: formData, enhance } = form;
 
-  const selectedChain = $derived($formData.chain.name);
+  const selectedChain = $state($formData.chain.name);
 
   const networkOptions = $derived(
     selectedChain === 'cardano'
@@ -82,7 +82,13 @@
                   >
                 </Select.Group>
               </Select.Content>
-              <Select.Input {...attrs} bind:value={$formData.chain.name} />
+              <Select.Input
+                {...attrs}
+                on:change={() => {
+                  console.log('yooo');
+                }}
+                bind:value={$formData.chain.name}
+              />
             </Select.Root>
           </Form.Control>
           <Form.FieldErrors />

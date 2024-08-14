@@ -33,14 +33,27 @@ export const actions: Actions = {
 
     const db = drizzle(platform!.env.ACCOUNTS);
 
-    await db
+    const [apiKey] = await db
       .insert(schema.apiKeys)
       .values({
         name: form.data.name,
         chain: form.data.chain,
         workspaceId: locals.currentWorkspaceId!,
       })
-      .execute();
+      .returning();
+
+    const { env, context } = platform!;
+
+    context.waitUntil(
+      env.TOKENS.put(
+        apiKey.token,
+        JSON.stringify({
+          id: apiKey.id,
+          workspaceId: apiKey.workspaceId,
+          chain: apiKey.chain,
+        }),
+      ),
+    );
 
     return redirect(302, `/workspaces/${workspaceIdOrSlug}`);
   },
