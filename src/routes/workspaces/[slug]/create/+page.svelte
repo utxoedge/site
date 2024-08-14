@@ -23,19 +23,22 @@
 
   const { form: formData, enhance } = form;
 
-  let selectedChain = $state($formData.name);
+  let selectedChain = $derived(
+    $formData.name
+      ? { label: $formData.name, value: $formData.name }
+      : undefined,
+  );
+
+  let selectedNetwork = $derived(
+    $formData.network
+      ? { label: $formData.network, value: $formData.network }
+      : undefined,
+  );
 
   let networkOptions = $derived(
-    selectedChain === 'cardano'
-      ? [
-          { value: 'mainnet', label: 'Mainnet' },
-          { value: 'preprod', label: 'Preprod' },
-          { value: 'preview', label: 'Preview' },
-        ]
-      : [
-          { value: 'mainnet', label: 'Mainnet' },
-          { value: 'testnet', label: 'Testnet' },
-        ],
+    selectedChain?.value === 'cardano'
+      ? ['mainnet', 'preprod', 'preview']
+      : ['mainnet', 'testnet'],
   );
 </script>
 
@@ -61,23 +64,23 @@
 
             <Select.Root
               portal={null}
+              selected={selectedChain}
               onSelectedChange={(v) => {
-                // @ts-expect-error it is what it is
-                selectedChain = v.value;
-                // @ts-expect-error it is what it is
-                $formData.name = v.value;
+                if (v) {
+                  $formData.name = v.value;
+                }
               }}
             >
-              <Select.Trigger>
+              <Select.Trigger {...attrs}>
                 <Select.Value placeholder="Select a blockchain" />
               </Select.Trigger>
               <Select.Content>
                 <Select.Group>
-                  <Select.Item value="cardano" label="Cardano"
+                  <Select.Item value="cardano" label="cardano"
                     >Cardano</Select.Item
                   >
 
-                  <Select.Item value="bitcoin" label="Bitcoin"
+                  <Select.Item value="bitcoin" label="bitcoin"
                     >Bitcoin</Select.Item
                   >
                 </Select.Group>
@@ -92,15 +95,23 @@
           <Form.Control let:attrs>
             <Form.Label>Network</Form.Label>
 
-            <Select.Root portal={null}>
-              <Select.Trigger>
+            <Select.Root
+              portal={null}
+              selected={selectedNetwork}
+              onSelectedChange={(v) => {
+                if (v) {
+                  $formData.network = v.value;
+                }
+              }}
+            >
+              <Select.Trigger {...attrs}>
                 <Select.Value placeholder="Select a network" />
               </Select.Trigger>
               <Select.Content>
                 <Select.Group>
                   {#each networkOptions as option}
-                    <Select.Item value={option.value} label={option.label}>
-                      {option.label}
+                    <Select.Item value={option} label={option}>
+                      {option}
                     </Select.Item>
                   {/each}
                 </Select.Group>
