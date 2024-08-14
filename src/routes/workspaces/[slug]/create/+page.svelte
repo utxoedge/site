@@ -67,7 +67,12 @@
           <Form.Control let:attrs>
             <Form.Label>Blockchain</Form.Label>
 
-            <Select.Root portal={null}>
+            <Select.Root
+              portal={null}
+              onSelectedChange={(v) => {
+                console.log(v);
+              }}
+            >
               <Select.Trigger>
                 <Select.Value placeholder="Select a blockchain" />
               </Select.Trigger>
@@ -82,13 +87,7 @@
                   >
                 </Select.Group>
               </Select.Content>
-              <Select.Input
-                {...attrs}
-                on:change={() => {
-                  console.log('yooo');
-                }}
-                bind:value={$formData.chain.name}
-              />
+              <Select.Input {...attrs} bind:value={$formData.chain.name} />
             </Select.Root>
           </Form.Control>
           <Form.FieldErrors />
