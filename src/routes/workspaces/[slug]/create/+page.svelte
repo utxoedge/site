@@ -18,16 +18,16 @@
   // Props
   let { data }: { data: PageData } = $props();
 
-  const form = superForm(data.form, {
+  let form = superForm(data.form, {
     validators: zodClient(createApiKeySchema),
     dataType: 'json',
   });
 
-  const { form: formData, enhance } = form;
+  let { form: formData, enhance } = form;
 
-  const selectedChain = $state($formData.chain.name);
+  let selectedChain = $derived($formData.chain.name);
 
-  const networkOptions = $derived(
+  let networkOptions = $derived(
     selectedChain === 'cardano'
       ? [
           { value: 'mainnet', label: 'Mainnet' },
@@ -67,12 +67,7 @@
           <Form.Control let:attrs>
             <Form.Label>Blockchain</Form.Label>
 
-            <Select.Root
-              portal={null}
-              onSelectedChange={(v) => {
-                console.log(v);
-              }}
-            >
+            <Select.Root portal={null}>
               <Select.Trigger>
                 <Select.Value placeholder="Select a blockchain" />
               </Select.Trigger>
