@@ -53,7 +53,7 @@
         <Form.Field {form} name="keyName">
           <Form.Control let:attrs>
             <Form.Label>Name</Form.Label>
-            <Input {...attrs} bind:value={$formData.name} />
+            <Input {...attrs} bind:value={$formData.keyName} />
           </Form.Control>
           <Form.FieldErrors />
         </Form.Field>
