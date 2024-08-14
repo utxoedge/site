@@ -12,7 +12,10 @@ import * as schema from '$lib/server/schema.sql';
 import type { PageServerLoad, Actions } from './$types';
 
 export const load: PageServerLoad = async () => {
-  const form = await superValidate(zod(createApiKeySchema));
+  const form = await superValidate(
+    { chain: { name: 'cardano', network: 'mainnet' } },
+    zod(createApiKeySchema),
+  );
 
   return { form };
 };

@@ -26,6 +26,25 @@
   const { form: formData, enhance } = form;
 
   const selectedChain = $derived($formData.chain.name);
+
+  const networkOptions = $derived(
+    selectedChain === 'cardano'
+      ? [
+          { value: 'mainnet', label: 'Mainnet' },
+          { value: 'preprod', label: 'Preprod' },
+          { value: 'preview', label: 'Preview' },
+        ]
+      : [
+          { value: 'mainnet', label: 'Mainnet' },
+          { value: 'testnet', label: 'Testnet' },
+        ],
+  );
+
+  $effect(() => {
+    if (selectedChain) {
+      $formData.chain.network = 'mainnet';
+    }
+  });
 </script>
 
 <Card.Root class="w-3/4 self-center">
@@ -79,27 +98,11 @@
               </Select.Trigger>
               <Select.Content>
                 <Select.Group>
-                  {#if selectedChain === 'cardano'}
-                    <Select.Item value="mainnet" label="Mainnet"
-                      >Mainnet</Select.Item
-                    >
-
-                    <Select.Item value="preprod" label="Preprod"
-                      >Preprod</Select.Item
-                    >
-
-                    <Select.Item value="preview" label="Preview"
-                      >Preview</Select.Item
-                    >
-                  {:else}
-                    <Select.Item value="mainnet" label="Mainnet"
-                      >Mainnet</Select.Item
-                    >
-
-                    <Select.Item value="testnet" label="Testnet"
-                      >Testnet</Select.Item
-                    >
-                  {/if}
+                  {#each networkOptions as option}
+                    <Select.Item value={option.value} label={option.label}>
+                      {option.label}
+                    </Select.Item>
+                  {/each}
                 </Select.Group>
               </Select.Content>
               <Select.Input {...attrs} bind:value={$formData.chain.network} />
