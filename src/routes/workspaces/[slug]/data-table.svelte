@@ -55,7 +55,7 @@
       id: 'chain.network',
       accessor: 'chain',
       header: 'Network',
-      cell: ({ value }) => value.name,
+      cell: ({ value }) => value.network,
     }),
 
     table.column({
