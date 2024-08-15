@@ -67,7 +67,9 @@ export const load: PageServerLoad = async ({ url, locals, platform }) => {
 };
 
 export const actions: Actions = {
-  default: async ({ request, platform, locals }) => {
+  default: async ({ request, platform, locals, params }) => {
+    const workspaceIdOrSlug = params.slug;
+
     const form = await superValidate(request, zod(inviteUserSchema));
 
     if (!form.valid) {
@@ -98,6 +100,6 @@ export const actions: Actions = {
       })
       .execute();
 
-    return redirect(302, `/workspaces`);
+    return redirect(302, `/workspaces/${workspaceIdOrSlug}/members`);
   },
 };
