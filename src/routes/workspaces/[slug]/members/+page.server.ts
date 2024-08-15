@@ -38,7 +38,7 @@ export const load: PageServerLoad = async ({ url, locals, platform }) => {
 
   const result = await db
     .select({
-      count: count(schema.apiKeys.id),
+      count: count(schema.users.id),
     })
     .from(schema.users)
     .innerJoin(
