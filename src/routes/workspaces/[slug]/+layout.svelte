@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
+  import { page } from '$app/stores';
 
   // Icons
   import SolarUserCircleBroken from '~icons/solar/user-circle-broken';
@@ -15,6 +16,21 @@
   const otherWorkspaces = $derived(
     data.workspaces.filter((w) => w.id !== data.currentWorkspace.id),
   );
+
+  function isActive(href: string) {
+    return $page.url.pathname === href;
+  }
+
+  const navItems = [
+    {
+      label: 'keys',
+      href: `/workspaces/${data.currentWorkspace.slug}`,
+    },
+    {
+      label: 'members',
+      href: `/workspaces/${data.currentWorkspace.slug}/members`,
+    },
+  ];
 </script>
 
 <div class="flex h-full w-full flex-col overflow-hidden">
@@ -51,13 +67,17 @@
       </DropdownMenu.Content>
     </DropdownMenu.Root>
 
-    <Button
-      variant="ghost"
-      class="p-0 text-xl font-bold"
-      href={`/workspaces/${data.currentWorkspace.slug}`}
-    >
-      {data.currentWorkspace.slug}
-    </Button>
+    <div class="flex items-center gap-8">
+      {#each navItems as { label, href }}
+        <Button
+          variant={isActive(href) ? 'outline' : 'ghost'}
+          class="p-0 text-xl font-bold"
+          {href}
+        >
+          {label}
+        </Button>
+      {/each}
+    </div>
 
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild let:builder>
